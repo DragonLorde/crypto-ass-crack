@@ -1,28 +1,22 @@
 {
-    "name": "cryptoregistration",
-    "version": "1.0.0",
-    "description": "",
-    "main": "registration.js",
-    "scripts": {
-        "dev": "nodemon registration.js",
-        "start": "node index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/DragonLorde/crypto-ass-crack.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/DragonLorde/crypto-ass-crack/issues"
-    },
-    "homepage": "https://github.com/DragonLorde/crypto-ass-crack#readme",
-    "dependencies": {
-        "chromedriver": "^96.0.0",
-        "nodemon": "^2.0.15",
-        "random-useragent": "^0.5.0",
-        "request": "^2.88.2",
-        "selenium-chrome-proxy-plugin": "^0.2.2",
-        "selenium-webdriver": "^4.1.0"
-    }
+  "name": "crypto-auto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^96.0.0",
+    "express": "^4.17.1",
+    "fake-useragent": "^1.0.1",
+    "nodemon": "^2.0.15",
+    "random-useragent": "^0.5.0",
+    "request": "^2.88.2",
+    "selenium-chrome-proxy-plugin": "^0.2.2",
+    "selenium-webdriver": "^4.1.0",
+    "webdriver": "^7.16.9"
+  }
 }

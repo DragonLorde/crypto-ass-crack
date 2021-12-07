@@ -21,6 +21,17 @@ async function ParseFile() {
     return parse
 }
 
+async function fileAppend(data){
+
+    fs.appendFile('core/config/output.txt', `${data},`, (err) => {
+        if(err) throw err;
+        console.log('Data has been added!');
+    });
+
+}
+
+
 module.exports = {
-    getFile:ParseFile
+    getFile:ParseFile,
+    fileAppend:fileAppend
 }

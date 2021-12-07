@@ -6,22 +6,42 @@ let user = 'uA8hi9YW'
 let password = '4iDfukzK'
 
 //масив с прокси
-let proxyArr = [
-  '31.184.198.40:61834',
-  '109.196.165.130:60275',
-  '109.94.211.183:46503',
-  '213.226.103.147:49893',
-  '45.132.128.5:64896',
-  '94.154.191.49:49217',
-  '92.249.12.148:48664'
+let proxys = [
+  '91.188.215.127:50986', 
+  '194.156.116.102:59881',  
+  '176.119.143.39:62524',  
+  '212.60.7.22:49010',  
+  '45.92.172.224:58844',  
+  '213.226.103.160:56535',  
+  '45.149.129.157:48479',  
+  '94.154.189.147:47676',  
+  '91.188.228.142:62247',  
+  '45.146.231.35:56013',  
+  '45.147.13.83:64703' 
 ]
 
+let lastProx = [proxys[0], proxys[1], proxys[2]];
+    
+function getProxy(){
+  let prox = proxys[getRandomInt(0, proxys.length)];
+  while(lastProx.includes(prox)){
+        prox = proxys[getRandomInt(0, proxys.length)];
+  }
+  lastProx.shift();
+  lastProx.push(prox);
+  return prox;
+}
+    
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+}
 
 //регистрация или получение информации 
 async function Registration(email) {
     await sleep(2000)
-    proxyArr[randomInteger(0 , proxyArr.length)]
-    let proxyUrl = "http://" + user + ":" + password + '@' + proxyArr[Math.floor(Math.random()*proxyArr.length)];
+    let proxyUrl = "http://" + user + ":" + password + '@' + getProxy();
 
     console.log(proxyUrl)
 
@@ -50,9 +70,42 @@ async function Registration(email) {
       })
     })
 }
+
+async function RegistrationMaster(email) {
+  await sleep(2000)
+  let proxyUrl = "http://" + user + ":" + password + '@' + getProxy();
+
+  console.log(proxyUrl)
+
+  let json = {
+      email: email,
+  }
+
+  let url = 'https://leads.kickofflabs.com/lead/155411';
+  let headers = {
+      'User-Agent': randomUseragent.getRandom()
+  };
+
+  return new Promise(function(resolve, reject) {
+    request.post({
+      url: url, 
+      headers: headers,
+      proxy: proxyUrl,
+      json: json,
+      strictSSL: false
+    }, function(err, resp, body) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve([body,proxyUrl]);
+      }
+    })
+  })
+}
+
 //Подтверждение почты
 async function ConfirmEmail(id) {
-  let proxyUrl = "http://" + user + ":" + password + '@' + proxyArr[randomInteger(0 , proxyArr.length)];
+  let proxyUrl = "http://" + user + ":" + password + '@' + getProxy();
 
     let url = `https://app.kickofflabs.com/verify-email?c=155411&t=9931de3386e828ab300c&s=${id}`;
     let headers = {
@@ -76,7 +129,7 @@ async function ConfirmEmail(id) {
 }
 //Выполнение заданий
 async function RandTask(kidUser) {
-  let proxyUrl = "http://" + user + ":" + password + '@' + proxyArr[Math.floor(Math.random()*proxyArr.length)];
+  let proxyUrl = "http://" + user + ":" + password + '@' + getProxy();
 
     let count = 5 //randomInteger(4 , 4)
 
@@ -117,7 +170,8 @@ async function RandTask(kidUser) {
 }
 //Добавление рефералов
 async function AddKid(email , index, emailArr) {
-    let resp = await Registration(email)
+    let respArr = await RegistrationMaster(email)
+    let resp = respArr[0]
     let kid = resp.social_id
 
     await sleep(3000)
@@ -140,7 +194,7 @@ async function AddKid(email , index, emailArr) {
       }
     }
     //возвращаем на каком индексе остановился цикл регистрации рефиреалов
-    return ind
+    return [ind , respArr[1]]
 }
 //задержка
 function sleep(ms) {
@@ -160,7 +214,7 @@ function shuffle(array) {
 }
 //регистрация пользователей
 async function _RegistrationKid(email2, kidUser) {
-  let proxyUrl = "http://" + user + ":" + password + '@' + proxyArr[Math.floor(Math.random()*proxyArr.length)];
+  let proxyUrl = "http://" + user + ":" + password + '@' + getProxy();
   console.log(kidUser + ' line 155')
   console.log(email2 + ' line 156')
   let json = {
