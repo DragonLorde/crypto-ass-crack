@@ -2,10 +2,10 @@ const request = require('request');
 const randomUseragent = require('random-useragent');
 
 //ДЛЯ ТЕСТОВ
-let user = '4Qw3QhaY'
-let password = 'prxc48p3'
-let host = '91.213.35.192'
-let port = '51707'
+let user = ''
+let password = ''
+let host = ''
+let port = ''
 
 var proxyUrl = "http://" + user + ":" + password + "@" + host + ":" + port;
 
